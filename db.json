@@ -1,0 +1,54 @@
+{
+  "employees": [
+    {
+      "id": 1,
+      "fullName": "Dhruv patel",
+      "email": "dhruv@docsvault.com",
+      "age": 21,
+      "phno": 9712925224,
+      "bday": "1/1/98",
+      "address": [
+        {
+          "street": "vrund res",
+          "city": "baroda",
+          "zip": 390016
+        },
+        {
+          "street": "gorwa road",
+          "city": "bharuch",
+          "zip": 390023
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "fullName": "Yash patel",
+      "email": "yash@gmail.com",
+      "age": 22,
+      "phno": 98225523221,
+      "bday": "2/2/12",
+      "address": [
+        {
+          "street": "hokahe sociey",
+          "city": "kalol",
+          "zip": 322122
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fullName": "pratik",
+      "age": 50,
+      "email": "pratik@docsvault.com",
+      "bday": "2020-09-18",
+      "phno": "2312323222",
+      "address": [
+        {
+          "street": "sadsad",
+          "city": "sadasdds",
+          "zip": 21
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+<div class="form-group">
+    <input type="text" placeholder="Enter query of name or Email" class="form-control" [formControl]="nameEmailQuery">
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+        <tr class="bg-primary">
+            <th>Name</th>
+            <th>email</th>
+            <th>Age</th>
+            <th>Phno</th>
+            <th>Birthdate</th>
+            <th colspan="2">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let femployee of filteredEmploye;let i=index">
+            <td>{{femployee.fullName}}</td>
+            <td>{{femployee.email}}</td>
+            <td>{{femployee.age}}</td>
+            <td>{{femployee.phno}}</td>
+            <td>{{femployee.bday}}</td>
+            
+            <td><button class="btn btn-primary" (click)="editButtonClick(femployee.id)">Edit</button></td>
+            <td colspan="2"><button class="btn btn-warning" (click)="deleteButtonClick(femployee.id,i)">Delete</button></td>
+        </tr>
+    </tbody>
+    </table>
+    </div>

@@ -1,0 +1,106 @@
+<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+   
+    Age:<input type="number" formControlName="age">
+     <div class="form-group" [ngClass]="{'has-error':formErrors.fullName}">
+         Full Name:<input type="text" class="form-control" formControlName="fullName"
+         (blur)="logValidationErrors()">
+         <span class="help-block" *ngIf="formErrors.fullName">
+             {{formErrors.fullName}}
+         </span>
+     </div>
+ 
+     <!-- Birthday -->
+     <div class="form-group" [ngClass]="{'has-error':formErrors.bday}">
+         Birthday:<input type="date" class="form-control" formControlName="bday"
+         (blur)="logValidationErrors()">
+         <span class="help-block" *ngIf="formErrors.bday">
+             {{formErrors.bday}}
+         </span>
+     </div>
+ 
+     <!-- Contact -->
+     <div class="form-group">
+         Contact Preference:&nbsp;
+         <input type="radio" formControlName="contactPreference" value="email"><b>Email</b>
+         <input type="radio" formControlName="contactPreference" value="phone"><b>Phone</b>
+ 
+     </div>
+     <div formGroupName="emailGroup">
+         <div class="form-group" [ngClass]="{'has-error':formErrors.email}">
+             Email:<input type="text" class="form-control" formControlName="email" (blur)="logValidationErrors()">
+             <span class="help-box" *ngIf="formErrors.email">
+                 {{formErrors.email}}
+             </span>
+         </div>
+ 
+         <div class="form-group" [ngClass]="{'has-error':formErrors.confirmEmail || formErrors.emailGroup}">
+             Confirm Email:<input type="text" class="form-control" formControlName="confirmEmail" (blur)="logValidationErrors()">
+             <span class="help-box" *ngIf="formErrors.confirmEmail || formErrors.emailGroup">
+                 {{formErrors.confirmEmail ?formErrors.confirmEmail :formErrors.emailGroup}}
+             </span>
+         </div>
+     </div>
+ 
+     <!-- Phone -->
+     <div class="form-group" [ngClass]="{'has-error':formErrors.phone}">
+         Phone No:<input type="text" class="form-control" formControlName="phone" (blur)="logValidationErrors()">
+         <span class="help-box" *ngIf="formErrors.phone">
+             {{formErrors.phone}}
+         </span>
+     </div>
+ 
+     Address 
+     <div class="well">
+         <div>
+             <button type="submit" class="btn btn-primary" (click)="addNewAddress()"
+             [disabled]="employeeForm.get('address').invalid">Add Another Address</button>
+         </div>
+         <div formArrayName="address" *ngFor="let addr of employeeForm.get('address')['controls'];
+                                             let i=index">
+             <div [formGroupName]="i" >
+                 street:
+                 <div class="form-group" [ngClass]="{'has-error':addr.controls.street.invalid &&
+                                                     addr.controls.street.touched}">
+                     <input type="text" class="form-control" placeholder="Enter street address" formControlName="street"> 
+                     <span class="help-box" *ngIf="addr.get('street').errors?.required &&
+                                             addr.get('street').touched">
+                         Street Name is required
+                     </span>
+                     <div class="col-sm-12" *ngIf="employeeForm.get('address').length>1">
+                         <button type="button" class="btn btn-danger btn-sm pull-right" title="Delete Address"
+                             (click)="removeAddressButton(i)">
+                             <span class="glyphicon glyphicon-remove"></span>
+                         </button>
+                     </div>
+                 </div>
+ 
+                 City:
+                 <div class="form-group" [ngClass]="{'has-error':addr.controls.city.invalid &&
+                                         addr.controls.city.touched}">
+                     <input type="text" class="form-control" placeholder="Enter city name" formControlName="city">
+                     <span class="help-box" *ngIf="addr.get('city').errors?.required &&
+                     addr.get('city').touched">
+                         City name is required
+                     </span>
+                 </div>
+ 
+                 Zip:
+                 <div class="form-group" [ngClass]="{'has-error':addr.controls.zip.invalid &&
+                                         addr.controls.zip.touched}">  
+                     <input type="number" class="form-control" placeholder="Enter zipcode" formControlName="zip">
+                     <span class="help-box" *ngIf="addr.get('zip').errors?.required &&
+                     addr.get('zip').touched">
+                         Zip code is required
+                     </span>
+                 </div>
+             </div>
+         </div>
+     </div> 
+ 
+ 
+     <br><br>
+     <div class="panel-footer">
+         <button class="btn btn-primary" type="submit" [disabled]="employeeForm.invalid">Save</button>
+     </div>
+ 
+ </form>
