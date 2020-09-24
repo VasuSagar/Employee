@@ -17,17 +17,21 @@ export class ListComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.getEmployees();
+
+    //name and email query
+    this.nameEmailQuery.valueChanges.subscribe((data) => { this.filter() });
+
+
+  }
+  getEmployees()
+  {
     this.employeeService.getAllEmployees().subscribe((data: Employee[]) => {
       this.Employees = data;
       this.filteredEmploye = data;
     }, (er) => {
       console.log(er);
     });
-
-    //name and email query
-    this.nameEmailQuery.valueChanges.subscribe((data) => { this.filter() });
-
-
   }
 
 

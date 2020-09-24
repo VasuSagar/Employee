@@ -44,18 +44,18 @@ export class EmployeeService {
     );
   }
 
-  updateEmployee(employee:Employee):Observable<void>
+  updateEmployee(employee:Employee):Observable<Employee>
   {
-    return this.http.put<void>(this.url+`/${employee.id}`,employee,{
+    return this.http.put<Employee>(this.url+`/${employee.id}`,employee,{
         //we can specify headers here if we want to like below
     }).pipe(
       catchError(this.handleError)
     );
   }
 
-  deleteEmployee(empId:Number):Observable<void>
+  deleteEmployee(empId:Number)
   {
-    return this.http.delete<void>(this.url+`/${empId}`)
+    return this.http.delete(this.url+`/${empId}`)
     .pipe(
       catchError(this.handleError)
     );

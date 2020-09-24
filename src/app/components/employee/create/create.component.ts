@@ -55,11 +55,13 @@ export class CreateComponent implements OnInit {
     age:[''],
     fullName: ['',[Validators.required,Validators.minLength(2)]],
     bday:['',[dateValidator,Validators.required]],
+   
     contactPreference: ['email'],
     emailGroup: this.fb.group({
       email: ['', [emailDomainparam('docsvault.com'), Validators.required]],
       confirmEmail: ['',Validators.required],
     },{validators: matchEmail}),
+
 
     phone: ['',phoneValidator],
     address: this.fb.array([
@@ -118,8 +120,6 @@ getEmployeeToEdit(empId:number)
   },
   (err)=>{console.log(err)}
   );
-
-  
 }
 
 editEmployee(emp:Employee)
@@ -191,6 +191,11 @@ addAdressFormGroup():FormGroup
     city:['',Validators.required],
     zip:['',[Validators.required]]
   });
+  // return this.fb.group({
+  //   street:[''],
+  //   city:[''],
+  //   zip:['']
+  // });
 }
 
 onSubmit()
@@ -207,6 +212,7 @@ onSubmit()
   else
   { console.log(this.employee);
     this.employeeService.saveEmployee(this.employee).subscribe((data)=>{
+      console.log(data);
       this.router.navigate(['employees/list']),
       (err)=>{console.log(err)}
     });
@@ -271,6 +277,81 @@ addNewAddress()
 
     });
 
+  }
+
+
+  //below functions are for testing
+  matchEmail(group: AbstractControl): { [key: string]: any } | null {
+    const emailControl = group.get('email');
+    const confirmEmailControl = group.get('confirmEmail');
+    if (emailControl.value == confirmEmailControl.value
+      || (confirmEmailControl.pristine && confirmEmailControl.value==='')) {
+      return null;
+    }
+    else {
+      return { 'emailMisMatch': true };
+    }
+  }
+
+  dateValidator(control: AbstractControl): { [key: string]: any } | null {
+    let i;
+  //  const fullDate:string=control.value;
+  const fullDate:string=control.value;
+  
+  
+   // console.log(fullDate);
+  
+    const date=fullDate.substring(fullDate.lastIndexOf('-')+1);
+    const month=fullDate.substring(5,7);
+  
+  
+    const year:string=fullDate.substring(0,4);
+  
+    if(fullDate==='')
+    {
+      return null;
+    }
+  
+    else if(year<"1900" || year>"2020")
+    {
+      return {'dateNotValid':true};
+    }
+  
+    else
+    {
+      return null;
+    }
+  }
+
+  phoneValidator(control: AbstractControl): { [key: string]: any } | null {
+    const phno:string=control.value;
+    if(phno.length==10 || phno==='')
+    {
+      return null;
+    }
+    else
+    {
+      return {'phoneNotValid':true};
+    }
+  
+  }
+
+  emailDomainparam(domainName: string) 
+  {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      const email: string = control.value;
+      const domain = email.substring(email.lastIndexOf('@') + 1);
+  
+      if (email === '' || domain.toLowerCase() === domainName.toLowerCase()) {
+        return null;
+      }
+      else {
+        return { 'emailDomain': true };
+      };
+    }
+  
+  
+  
   }
 
 
@@ -355,6 +436,10 @@ function matchEmail(group: AbstractControl): { [key: string]: any } | null {
     return { 'emailMisMatch': true };
   }
 }
+
+//for testing purpose we are also including this helper fucntions in the class so that we can perform
+//tests on them 
+
 
 
 
